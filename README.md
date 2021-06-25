@@ -1,0 +1,2 @@
+# Investment-Optimizer-and-Stock-Growth-Predictor
+This application aims at evaluating stock trends and current news to predict it's future growth. It provides a clean and efficient user interface to view current prices and fluctuation history. It also provides a tool to identify a ideal combination of stocks that one should invest in based on the given budget, using our machine learning and optimization algorithm.
