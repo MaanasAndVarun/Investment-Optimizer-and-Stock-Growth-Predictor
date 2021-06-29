@@ -672,17 +672,17 @@ if a=='Understand':
         if c==10:
             break
         try:
-            def Send1():
-                global option, all_stocks, x
-                option=requests.get(all_stocks[x])
+            def Send1(i):
+                global option
+                option=requests.get(i)
             if(__name__=="__main__"):
-                action_process = Process(target=Send1())
+                action_process = Process(target=Send1(all_stocks[x))
                 action_process.start()
 
                 action_process.join(7)
         
                 # We terminate the process.
-                action_process.terminate()
+                action_process.kill()
         except ConnectionError or ConnectionAbortedError or ConnectionRefusedError:
             checkera=checkera+1
         finally:
