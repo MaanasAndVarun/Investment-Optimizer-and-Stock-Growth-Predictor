@@ -678,7 +678,7 @@ if a=='Understand':
             option=requests.get(all_links[i], timeout=3)
            
             
-        except ConnectionError or ConnectionAbortedError or ConnectionRefusedError:
+        except ConnectionError or ConnectionAbortedError or ConnectionRefusedError or ReadTimeout:
             checkera=checkera+1
         finally:
             if checkera==0:
