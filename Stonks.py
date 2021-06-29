@@ -672,8 +672,9 @@ if a=='Understand':
         if c==10:
             break
         try:
-            def Send1(i):
-                option=requests.get(i)
+            def Send1():
+                global all_links, x
+                option=requests.get(all_links[x])
                 return option
             def timeout(func, args=(), kwargs={}, timeout_duration=1, default=None):
                 import signal
@@ -695,7 +696,7 @@ if a=='Understand':
                     signal.alarm(0)
 
                 return result
-            option=timeout(Send1, args=(all_stocks[i]), timeout_duration=7, default=None)
+            option=timeout(Send1, timeout_duration=7, default=None)
             
         except ConnectionError or ConnectionAbortedError or ConnectionRefusedError:
             checkera=checkera+1
