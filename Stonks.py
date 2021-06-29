@@ -22,7 +22,7 @@ import csv
 from requests.exceptions import ConnectionError
 from multiprocessing import Process
 from threading import Thread, Event
-from requests.exceptions import ReadTimeout
+from requests.exceptions import ReadTimeout, Timeout
 
 words=pickle.load(open('words.pkl','rb'))
 classes=pickle.load(open('classes.pkl','rb'))
@@ -677,7 +677,7 @@ if a=='Understand':
             break
         try:
             option=requests.get(all_links[x], timeout=3)
-        except ConnectionError or ConnectionAbortedError or ConnectionRefusedError or ReadTimeout:
+        except ConnectionError or ConnectionAbortedError or ConnectionRefusedError or ReadTimeout or Timeout:
             checkera=checkera+1
             st.write("Error here")
         else:
