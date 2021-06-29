@@ -682,7 +682,7 @@ if a=='Understand':
                 action_process.join(7)
         
                 # We terminate the process.
-                action_process.kill()
+                action_process.terminate()
         except ConnectionError or ConnectionAbortedError or ConnectionRefusedError:
             checkera=checkera+1
         finally:
