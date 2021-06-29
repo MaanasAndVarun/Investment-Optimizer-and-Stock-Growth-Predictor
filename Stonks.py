@@ -291,51 +291,59 @@ if(a=="Invest"):
         progresscount=10
 
         for badgirl in invstock_name:
-            send="https://www.google.com/search?q=should+you+invest+in+ "+badgirl.lower()+" stock"
-            res=requests.get(send)
-            soup=BeautifulSoup(res.content, "html.parser")
-            all_links=[]
-            count=0
-            for i in soup.select("a"):
-                if count==1:
-                    break
-                link=i.get("href")
-                if("/url?q=https://" in link):
-                    if(("/url?q=https://support.google.com" not in link) and ("/url?q=https://accounts.google.com" not in link)):
-                        x=link.split("https://")
-                        y=x[1].split("&sa")
-                        new="https://"+y[0]
-                        all_links.append(new)
-                        z=i.text
-                        if("..." in z):
-                            type2=z.split("...")
-                            name=type2[0]
-                        else:
-                            type1=z.split(" › ")
-                            name=type1[0]
-                        count+=1
-            list1=[]
-            c=0
-            for i in all_links:
-                if c==1:
-                    break
-                option=requests.get(i)
-                soup=BeautifulSoup(option.content, "html.parser")
-                pageinfo=soup.select("p")
-                for j in pageinfo:
-                    m=j.text
-                    n=m.split(' ')
-                    for i in n:
-                        list1.append(i)
-                c=c+1   
-            tex=' '.join(list1)   
-            find=predict_class(tex,model)
-            varun=[]
-            varun.append(float(find['probability']))
-            varun.append(find['intent'])
-            invstock_conf.append(varun)
-            progresscount=progresscount+10
-            my_bar.progress(progresscount)
+            checkerb=0
+            try: 
+                send="https://www.google.com/search?q=should+you+invest+in+ "+badgirl.lower()+" stock"
+                res=requests.get(send)
+            except ReadTimeout:
+                checkerb=checkerb+1
+ 
+            except ConnectionError or ConnectionAbortedError or ConnectionRefusedError:
+                checkerb=checkerb+1
+            else:
+                soup=BeautifulSoup(res.content, "html.parser")
+                all_links=[]
+                count=0
+                for i in soup.select("a"):
+                    if count==1:
+                        break
+                    link=i.get("href")
+                    if("/url?q=https://" in link):
+                        if(("/url?q=https://support.google.com" not in link) and ("/url?q=https://accounts.google.com" not in link)):
+                            x=link.split("https://")
+                            y=x[1].split("&sa")
+                            new="https://"+y[0]
+                            all_links.append(new)
+                            z=i.text
+                            if("..." in z):
+                                type2=z.split("...")
+                                name=type2[0]
+                            else:
+                                type1=z.split(" › ")
+                                name=type1[0]
+                            count+=1
+                list1=[]
+                c=0
+                for i in all_links:
+                    if c==1:
+                        break
+                    option=requests.get(i)
+                    soup=BeautifulSoup(option.content, "html.parser")
+                    pageinfo=soup.select("p")
+                    for j in pageinfo:
+                        m=j.text
+                        n=m.split(' ')
+                        for i in n:
+                            list1.append(i)
+                    c=c+1   
+                tex=' '.join(list1)   
+                find=predict_class(tex,model)
+                varun=[]
+                varun.append(float(find['probability']))
+                varun.append(find['intent'])
+                invstock_conf.append(varun)
+                progresscount=progresscount+10
+                my_bar.progress(progresscount)
         stocks={}
         for i in range(len(invstock_name)):
             temp=[]
