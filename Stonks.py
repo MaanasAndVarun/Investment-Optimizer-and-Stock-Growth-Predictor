@@ -676,7 +676,7 @@ if a=='Understand':
                 global option
                 option=requests.get(i)
             if(__name__=="__main__"):
-                action_process = Process(target=Send1(all_stocks[x))
+                action_process = Process(target=Send1(all_stocks[x]))
                 action_process.start()
 
                 action_process.join(7)
