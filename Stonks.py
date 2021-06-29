@@ -674,21 +674,9 @@ if a=='Understand':
         if c==10:
             break
         try:
-            def Send1(i):
-                global option
-                option=requests.get(i)
-            bridge = Event()
-            if __name__ == '__main__':
-                # Creating the main thread that executes the function
-                main_thread= Thread(target=Send1(all_links[x]))
-
-                # We start the thread and will wait for 3 seconds then the code will continue to execute
-                main_thread.start()
-                main_thread.join(timeout=3)
-
-                # sends the signal to stop other thread
-                bridge.set()
-            
+          
+            option=requests.get(all_links[i], timeout=3)
+           
             
         except ConnectionError or ConnectionAbortedError or ConnectionRefusedError:
             checkera=checkera+1
