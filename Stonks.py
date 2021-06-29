@@ -21,6 +21,7 @@ from bs4 import BeautifulSoup
 import csv
 from requests.exceptions import ConnectionError
 from multiprocessing import Process
+from threading import Thread, Event
 
 words=pickle.load(open('words.pkl','rb'))
 classes=pickle.load(open('classes.pkl','rb'))
@@ -672,31 +673,21 @@ if a=='Understand':
         if c==10:
             break
         try:
-            def Send1():
-                global all_links, x
-                option=requests.get(all_links[x])
-                return option
-            def timeout(func, args=(), kwargs={}, timeout_duration=1, default=None):
-                import signal
+            def Send1(i):
+                global option
+                option=requests.get(i)
+            bridge = Event()
+            if __name__ == '__main__':
+                # Creating the main thread that executes the function
+                main_thread= Thread(target=Send1(all_links[x]))
 
-                class TimeoutError(Exception):
-                    pass
+                # We start the thread and will wait for 3 seconds then the code will continue to execute
+                main_thread.start()
+                main_thread.join(timeout=3)
 
-                def handler(signum, frame):
-                    raise TimeoutError()
-
-                # set the timeout handler
-                signal.signal(signal.SIGALRM, handler) 
-                signal.alarm(timeout_duration)
-                try:
-                    result = func(*args, **kwargs)
-                except TimeoutError as exc:
-                    result = default
-                finally:
-                    signal.alarm(0)
-
-                return result
-            option=timeout(Send1, timeout_duration=7, default=None)
+                # sends the signal to stop other thread
+                bridge.set()
+            
             
         except ConnectionError or ConnectionAbortedError or ConnectionRefusedError:
             checkera=checkera+1
