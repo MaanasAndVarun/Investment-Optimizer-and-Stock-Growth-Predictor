@@ -668,6 +668,7 @@ if a=='Understand':
     c=0
  
     alllinksind=len(all_links)
+    st.write(str(all_links))
     for x in range(alllinksind):
         st.write(str(all_links[x]))
         checkera=0
@@ -677,8 +678,10 @@ if a=='Understand':
             option=requests.get(all_links[x], timeout=3)
         except ConnectionError or ConnectionAbortedError or ConnectionRefusedError or ReadTimeout:
             checkera=checkera+1
+            st.write("Error here")
         else:
             if checkera==0:
+                st.write("This is running")
                 soup=BeautifulSoup(option.content, "html.parser")
                 pageinfo=soup.select('p')
                 paglen=len(pageinfo)
@@ -688,11 +691,6 @@ if a=='Understand':
                     for i in n:
                         list1.append(i)
                 c=c+1
-            
-
-
-        
-
         
     tex=' '.join(list1)
     understand_prob=predict_class(tex,model)
