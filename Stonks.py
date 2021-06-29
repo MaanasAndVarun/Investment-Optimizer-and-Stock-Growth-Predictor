@@ -674,10 +674,7 @@ if a=='Understand':
         if c==10:
             break
         try:
-          
-            option=requests.get(all_links[i], timeout=3)
-           
-            
+            option=requests.get(all_links[x], timeout=3)
         except ConnectionError or ConnectionAbortedError or ConnectionRefusedError or ReadTimeout:
             checkera=checkera+1
         finally:
