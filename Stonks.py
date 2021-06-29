@@ -675,15 +675,15 @@ if a=='Understand':
             def Send1(i):
                 global option
                 option=requests.get(i)
-            
-            action_process = Process(target=Send1(all_links[x]))
- 
-            # We start the process and we block for 5 seconds.
-            action_process.start()
-            action_process.join(timeout=5)
+            if(__name__=="__main__"):
+                action_process = Process(target=Send1(all_links[x]))
+
+                # We start the process and we block for 5 seconds.
+                action_process.start()
+                action_process.join(timeout=5)
         
-            # We terminate the process.
-            action_process.terminate()
+                # We terminate the process.
+                action_process.terminate()
         except ConnectionError or ConnectionAbortedError or ConnectionRefusedError:
             checkera=checkera+1
         finally:
