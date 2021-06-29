@@ -677,7 +677,11 @@ if a=='Understand':
             break
         try:
             option=requests.get(all_links[x], timeout=3)
-        except ConnectionError or ConnectionAbortedError or ConnectionRefusedError or ReadTimeout or Timeout:
+ 
+        except ReadTimeout:
+            checkera=checkera+1
+            st.write("Error here")
+        except ConnectionError or ConnectionAbortedError or ConnectionRefusedError:
             checkera=checkera+1
             st.write("Error here")
         else:
