@@ -673,16 +673,30 @@ if a=='Understand':
             break
         try:
             def Send1(i):
-                global option
                 option=requests.get(i)
-            if(__name__=="__main__"):
-                action_process = Process(target=Send1(all_stocks[x]))
-                action_process.start()
+                return option
+            def timeout(func, args=(), kwargs={}, timeout_duration=1, default=None):
+                import signal
 
-                action_process.join(7)
-        
-                # We terminate the process.
-                action_process.terminate()
+                class TimeoutError(Exception):
+                    pass
+
+                def handler(signum, frame):
+                    raise TimeoutError()
+
+                # set the timeout handler
+                signal.signal(signal.SIGALRM, handler) 
+                signal.alarm(timeout_duration)
+                try:
+                    result = func(*args, **kwargs)
+                except TimeoutError as exc:
+                    result = default
+                finally:
+                    signal.alarm(0)
+
+                return result
+            option=timeout(Send1, args=(all_stocks[i]), timeout_duration=7, default=None)
+            
         except ConnectionError or ConnectionAbortedError or ConnectionRefusedError:
             checkera=checkera+1
         finally:
