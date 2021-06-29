@@ -1,0 +1,1 @@
+{'intent': 'up', 'probability': '0.559707'}{'intent': 'down', 'probability': '0.440293'}
