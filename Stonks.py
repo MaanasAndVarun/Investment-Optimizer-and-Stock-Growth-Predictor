@@ -669,6 +669,7 @@ if a=='Understand':
  
     alllinksind=len(all_links)
     for x in range(alllinksind):
+        st.write(str(all_links[x]))
         checkera=0
         if c==10:
             break
