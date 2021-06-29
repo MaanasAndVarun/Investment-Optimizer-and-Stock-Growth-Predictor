@@ -677,7 +677,7 @@ if a=='Understand':
             option=requests.get(all_links[x], timeout=3)
         except ConnectionError or ConnectionAbortedError or ConnectionRefusedError or ReadTimeout:
             checkera=checkera+1
-        finally:
+        else:
             if checkera==0:
                 soup=BeautifulSoup(option.content, "html.parser")
                 pageinfo=soup.select('p')
