@@ -22,6 +22,7 @@ import csv
 from requests.exceptions import ConnectionError
 from multiprocessing import Process
 from threading import Thread, Event
+from requests.exceptions import ReadTimeout
 
 words=pickle.load(open('words.pkl','rb'))
 classes=pickle.load(open('classes.pkl','rb'))
