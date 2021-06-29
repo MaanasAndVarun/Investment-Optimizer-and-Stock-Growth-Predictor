@@ -1,0 +1,15 @@
+{"intents": [
+    {"tag": "up",
+     "patterns": ["incline", "increase","grow","surge", "rise", "climb","positive","buy","increment","suit up","improve","strengthen",
+        "boom","jump","up","flourish","mature","progress","boost"],
+     "responses": ["Yes, you should invest"],
+     "context": [""]
+    },
+    {"tag": "down",
+     "patterns": ["debt","sink","decline","decrease","down","reduce","negative","sell","fall","drop","slowdown","decrement","dwindle",
+        "dipped","underperform","inflate","fear","retreat"],
+     "responses": ["No, you shouldn't invest"],
+     "context": [""]
+    }
+]
+}
