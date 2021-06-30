@@ -249,7 +249,7 @@ st.title('Investment Optimizer and Stock Growth Predictor')
 
 #We'll add this when we come up with something
 expander=st.beta_expander(label='',expanded=False)
-expander.write("This application aims at evaluating stock trends and current news to predict it's future growth. It provides a clean and efficient user interface to view current prices and fluctuation history. It also provides a tool to identify an ideal combination of stocks that one should invest in based on the given budget, using our machine learning and optimization algorithm. We have named our ML model "ATHENA", which stands for Algorithmic Enhancer")
+expander.write("This application aims at evaluating stock trends and current news to predict it's future growth. It provides a clean and efficient user interface to view current prices and fluctuation history. It also provides a tool to identify an ideal combination of stocks that one should invest in based on the given budget, using our machine learning and optimization algorithm. We have named our ML model 'ATHENA', which stands for Algorithmic Enhancer")
 
 st.write("")
 st.write("")
