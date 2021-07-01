@@ -519,7 +519,8 @@ if(a=="Invest"):
             st.write('Budget too low to diversify')
 
 
-
+    st.write("Disclaimer: We are not liable for the results or actions taken on the basis of these predictions.")
+    
 if a=='Understand':    
     ticker = st.sidebar.selectbox(
             'Choose a Stock',symbols)
@@ -718,3 +719,5 @@ if a=='Understand':
     finb="**Athena's confidence: **"+ '_'+ str(finprob)+'%' +'_'
     st.subheader(fininta)
     st.subheader(finb)
+    
+    st.write("Disclaimer: We are not liable for the results or actions taken on the basis of these predictions.")
