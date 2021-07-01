@@ -513,13 +513,13 @@ if(a=="Invest"):
             st.write('')
             st.write('')
 
- 
+            st.write("Disclaimer: We are not liable for the results or actions taken on the basis of these predictions.")
 
         else:
             st.write('Budget too low to diversify')
 
 
-    st.write("Disclaimer: We are not liable for the results or actions taken on the basis of these predictions.")
+    
     
 if a=='Understand':    
     ticker = st.sidebar.selectbox(
