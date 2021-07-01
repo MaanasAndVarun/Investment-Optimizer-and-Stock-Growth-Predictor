@@ -512,7 +512,8 @@ if(a=="Invest"):
             st.write(text3c)
             st.write('')
             st.write('')
-
+            st.header("")
+            st.header("")
             st.write("Disclaimer: We are not liable for the results or actions taken on the basis of these predictions.")
 
         else:
@@ -719,5 +720,6 @@ if a=='Understand':
     finb="**Athena's confidence: **"+ '_'+ str(finprob)+'%' +'_'
     st.subheader(fininta)
     st.subheader(finb)
-    
+    st.header("")
+    st.header("")
     st.write("Disclaimer: We are not liable for the results or actions taken on the basis of these predictions.")
