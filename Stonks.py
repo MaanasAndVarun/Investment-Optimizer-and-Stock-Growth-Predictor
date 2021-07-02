@@ -725,10 +725,10 @@ if a=='Understand':
     st.markdown("""
         <style>
         .small-font {
-        font-size:9px !important;
+        font-size:10px !important;
         }
         </style>
         """, unsafe_allow_html=True)
 
-    st.markdown('<p class="small-font">Hello World !!</p>', unsafe_allow_html=True) 
-    st.write("Disclaimer: We are not liable for the results or actions taken on the basis of these predictions.")
+    st.markdown('<p class="small-font">Disclaimer: We are not liable for the results or actions taken on the basis of these predictions.</p>', unsafe_allow_html=True) 
+ 
