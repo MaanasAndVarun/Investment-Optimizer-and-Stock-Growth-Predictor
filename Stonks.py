@@ -725,7 +725,7 @@ if a=='Understand':
     st.markdown("""
         <style>
         .small-font {
-        font-size:30px !important;
+        font-size:3px !important;
         }
         </style>
         """, unsafe_allow_html=True)
