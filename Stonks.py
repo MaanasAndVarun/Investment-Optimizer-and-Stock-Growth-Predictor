@@ -722,4 +722,13 @@ if a=='Understand':
     st.subheader(finb)
     st.header("")
     st.header("")
+    st.markdown("""
+        <style>
+        .small-font {
+        font-size:30px !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
+    st.markdown('<p class="small-font">Hello World !!</p>', unsafe_allow_html=True) 
     st.write("Disclaimer: We are not liable for the results or actions taken on the basis of these predictions.")
