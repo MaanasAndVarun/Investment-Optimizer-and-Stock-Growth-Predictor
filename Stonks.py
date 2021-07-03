@@ -201,7 +201,7 @@ def predict_class(sentence, model):
     print(results)
 
     #for guesses above threshold
-    #f=open('r.txt','w')
+    #f=('r.txt','w')
     #for all guesses
     #f1=open('s.txt','w')
     # sort by strength of probability
@@ -280,18 +280,12 @@ if(a=="Invest"):
             last_quote = (data.tail(1)['Close'].iloc[0])
             invstock_price.append(float(last_quote))    
         invstock_conf=[]
-        st.markdown("""
-            <style>
-            .stProgress .st-bo {
-                background-color: green;
-            }
-            </style>
-            """, unsafe_allow_html=True)
         my_bar=st.progress(0)
         progresscount=10
 
         for badgirl in invstock_name:
             checkerb=0
+            st.write(str(badgirl))
             try: 
                 send="https://www.google.com/search?q=should+you+invest+in+ "+badgirl.lower()+" stock"
                 res=requests.get(send)
@@ -305,7 +299,7 @@ if(a=="Invest"):
                 all_links=[]
                 count=0
                 for i in soup.select("a"):
-                    if count==1:
+                    if count==5:
                         break
                     link=i.get("href")
                     if("/url?q=https://" in link):
@@ -324,19 +318,30 @@ if(a=="Invest"):
                             count+=1
                 list1=[]
                 c=0
-                for i in all_links:
-                    if c==1:
+                for link in all_links:
+                    a=all_links.index(link)
+                    if c==2:
                         break
-                    option=requests.get(i)
+                    option=requests.get(link)
                     soup=BeautifulSoup(option.content, "html.parser")
                     pageinfo=soup.select("p")
                     for j in pageinfo:
                         m=j.text
                         n=m.split(' ')
-                        for i in n:
-                            list1.append(i)
+                        st.write(str(n))
+                        if 'automation'  not in n:
+                            if 'cookies' not in n:
+                                for i in n:
+                                    list1.append(i)
+                            else:
+                                all_links.pop(a)
+                        else:
+                            all_links.pop(a)
+
+                        
                     c=c+1   
                 tex=' '.join(list1)   
+                st.write(str(list1))
                 find=predict_class(tex,model)
                 varun=[]
                 varun.append(float(find['probability']))
@@ -731,4 +736,3 @@ if a=='Understand':
         """, unsafe_allow_html=True)
 
     st.markdown('<p class="small-font">Disclaimer: We are not liable for the results or actions taken on the basis of these predictions.</p>', unsafe_allow_html=True) 
- 
