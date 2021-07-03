@@ -327,7 +327,6 @@ if(a=="Invest"):
                     for j in pageinfo:
                         m=j.text
                         n=m.split(' ')
-                        st.write(str(n))
                         if 'automation'  not in n:
                             if 'cookies' not in n:
                                 for i in n:
