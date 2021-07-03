@@ -285,7 +285,6 @@ if(a=="Invest"):
 
         for badgirl in invstock_name:
             checkerb=0
-            st.write(str(badgirl))
             try: 
                 send="https://www.google.com/search?q=should+you+invest+in+ "+badgirl.lower()+" stock"
                 res=requests.get(send)
@@ -341,7 +340,6 @@ if(a=="Invest"):
                         
                     c=c+1   
                 tex=' '.join(list1)   
-                st.write(str(list1))
                 find=predict_class(tex,model)
                 varun=[]
                 varun.append(float(find['probability']))
