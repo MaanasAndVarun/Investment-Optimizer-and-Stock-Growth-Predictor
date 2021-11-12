@@ -2,6 +2,9 @@ from google.protobuf.symbol_database import Default
 import nltk
 import random
 import pickle
+from nltk.corpus.reader.chasen import test
+from pandas.core.indexes import period
+from statsmodels.tsa.seasonal import _extrapolate_trend
 nltk.download('punkt')
 nltk.download('wordnet')
 from nltk.stem import WordNetLemmatizer
@@ -10,24 +13,29 @@ lemmatizer = WordNetLemmatizer()
 import pandas as pd
 import yfinance as yf
 import streamlit as st
+import statsmodels.api as sm
 import datetime as dt
 import time
 import plotly.graph_objects as go
+from statsmodels.tsa.arima_model import ARIMA
+from sklearn.metrics import mean_squared_error
 import requests
 import json
 import numpy as np
+import matplotlib.pyplot as plt
 from keras.models import load_model
 from bs4 import BeautifulSoup
 import csv
+import pmdarima as pm
 from requests.exceptions import ConnectionError
 from multiprocessing import Process
 from threading import Thread, Event
 from requests.exceptions import ReadTimeout, Timeout
 
-words=pickle.load(open('words.pkl','rb'))
-classes=pickle.load(open('classes.pkl','rb'))
-model = load_model("stock_model.h5")
-intents=json.loads(open('training.json').read())
+words=pickle.load(open('C:/Users/Maanas/Desktop/Codes/Trading-main/words.pkl','rb'))
+classes=pickle.load(open('C:/Users/Maanas/Desktop/Codes/Trading-main/classes.pkl','rb'))
+model = load_model("C:/Users/Maanas/Desktop/Codes/Trading-main/stock_model.h5")
+intents=json.loads(open('C:/Users/Maanas/Desktop/Codes/Trading-main/training.json').read())
 def calcMovingAverage(data, size):
     df = data.copy()
     df['sma'] = df['Adj Close'].rolling(size).mean()
@@ -61,7 +69,7 @@ def graphMyStock(finalvar,a,b,col):
     info2=stock2.info
     ln2=info2['longName']
             
-    opt1b, opt2b = st.beta_columns(2)
+    opt1b, opt2b = st.columns(2)
     with opt1b:
         numYearMAb = st.number_input('Insert period (Year): ', min_value=1, max_value=10, value=2, key=a)    
             
@@ -103,7 +111,7 @@ def graphAllStocks(stocka,stockb,stockc,a,b,col1,col2,col3):
     st.subheader('**Graph of optimal stocks:** ')
 
             
-    opt1b, opt2b = st.beta_columns(2)
+    opt1b, opt2b = st.columns(2)
     with opt1b:
         numYearMAb = st.number_input('Insert period (Year): ', min_value=1, max_value=10, value=2, key=a)    
             
@@ -242,13 +250,13 @@ def FinalPrediction(msg):
     res = getResponse(ints, intents)
     return res
 
-stockdata = pd.read_csv("SP500.csv")
+stockdata = pd.read_csv("C:/Users/Maanas/Desktop/Codes/Trading-main/SP500.csv")
 symbols = stockdata['Symbol'].sort_values().tolist()  
 
 st.title('Investment Optimizer and Stock Growth Predictor')
 
 #We'll add this when we come up with something
-expander=st.beta_expander(label='',expanded=False)
+expander=st.expander(label='',expanded=False)
 expander.write("This application aims at evaluating stock trends and current news to predict it's future growth. It provides a clean and efficient user interface to view current prices and fluctuation history. It also provides a tool to identify an ideal combination of stocks that one should invest in based on the given budget, using our machine learning and optimization algorithm. We have named our ML model 'ATHENA', which stands for Algorithmic Enhancer")
 
 st.write("")
@@ -266,7 +274,7 @@ if(a=="Invest"):
         invest=[]
         invstock_sym=[]
         invstock_name=[]
-        f= open("SP500.csv",'r')
+        f= open("C:/Users/Maanas/Desktop/Codes/Trading-main/SP500.csv",'r')
         rd=csv.reader(f)
         for x in rd:
             if x!=[]:
@@ -535,7 +543,7 @@ if a=='Understand':
     st.title(info['longName'])
     st.title(ticker)
             
-    opt1, opt2 = st.beta_columns(2)
+    opt1, opt2 = st.columns(2)
             
     with opt1:
         numYearMA = st.number_input('Insert period (Year): ', min_value=1, max_value=10, value=2, key=0)    
@@ -561,11 +569,14 @@ if a=='Understand':
                 line=dict(color='royalblue')
                         )
                 )
+
+
     compstock2=st.selectbox('Choose stock to compare with: ', symbols)
     st.info("If you don't wish to compare, select the same stock again")
     livedata2=yf.download(compstock2,start,end)
     df_ma2= calcMovingAverage(livedata2, windowSizeMA)
     df_ma2= df_ma2.reset_index()
+
     fig.add_trace(
         go.Scatter(
                 x=df_ma2['Date'],
@@ -574,7 +585,6 @@ if a=='Understand':
                 mode='lines',
                 line=dict(color='firebrick')
                     ))
-
 
 
                     
@@ -590,11 +600,107 @@ if a=='Understand':
     
         
     st.plotly_chart(fig, use_container_width=True)  
-            
+    
+    livedata3 = yf.download(ticker,start,end)
+    df_ma3 = calcMovingAverage(livedata3, windowSizeMA)
+    df_ma3 = df_ma.reset_index()
 
+    train_data, test_data = df_ma3[0:int(len(df_ma3)*0.7)], df_ma3[int(len(df_ma3)*0.7):]
+    training_data = train_data['Adj Close'].values
+    test_data = test_data['Adj Close'].values
+    history = [x for x in training_data]
+    model_predictions = []
+    N_test_observations = len(test_data)
+    abcd=0
+    for time_point in range(N_test_observations):
+        model = ARIMA(history, order=(4,1,0))
+        model_fit = model.fit(disp=0)
+        output = model_fit.forecast()
+        yhat = output[0]
+        model_predictions.append(yhat[0])
+        true_test_value = test_data[time_point]
+        history.append(true_test_value)
+        abcd=abcd+1
+        af=time_point
+
+
+
+
+
+    MSE_error = mean_squared_error(test_data, model_predictions)
+    test_set_range = df_ma3[int(len(df_ma3)*0.7):]
+    dts=df_ma3.loc[:,['Date']]
+
+
+
+    new = pd.date_range(test_set_range.Date.iloc[-1], periods=30)
+    df1 = pd.DataFrame(new[1:], columns=['Date'])
+    df_fin = test_set_range.append(df1, ignore_index=True)
+
+    
+    mps=[]
+    for i in range(30):
+        model = ARIMA(history, order=(4,1,0))  
+        fitted = model.fit(disp=0)
+        ou=fitted.forecast()
+        yha = ou[0]
+        mps.append(yha[0])
+        history.append(yha[0])
+    future_dates=[]
+
+    dat=[]
+    for row in df_fin.itertuples():
+        dat.append(row[2])
+    
+    mxq=dat[-1]-dt.timedelta(days=29)
+    future_dates.append(mxq)
+    for i in range (30):
+        date=future_dates[-1]+dt.timedelta(days=1)
+        future_dates.append(date)
+    myseries=pd.Series(mps)
+
+
+    st.subheader('Future Graph Trend for '+ info['longName']+' using Time Series Analysis')
+    figtsa=go.Figure()
+    figtsa.add_trace(
+        go.Scatter(
+            x=df_fin['Date'],
+            y=model_predictions,
+            name = 'Predicted Prices',
+            mode='lines'
+        )
+    
+    )
+    figtsa.add_trace(
+        go.Scatter(
+            x=df_fin['Date'],
+            y=test_data,
+            mode='lines',
+            name='Previous model prediction graph'
+
+
+        )
+    )
+    
+    
+    
+    figtsa.add_trace(
+        go.Scatter(
+            x=future_dates,
+            y=mps,
+            mode='lines',
+            name='Future Price Trend'
             
+        )
+    )
+    
+    
+
+    st.plotly_chart(figtsa, use_container_width=True)  
+
+          
     st.subheader('Bollinger Band')
-    opta, optb = st.beta_columns(2)
+    opta, optb = st.columns(2)
     with opta:
         numYearBoll = st.number_input('Insert period (Year): ', min_value=1, max_value=10, value=2, key=6) 
                 
@@ -731,4 +837,3 @@ if a=='Understand':
         """, unsafe_allow_html=True)
 
     st.markdown('<p class="small-font">Disclaimer: We are not liable for the results or actions taken on the basis of these predictions.</p>', unsafe_allow_html=True) 
- 
