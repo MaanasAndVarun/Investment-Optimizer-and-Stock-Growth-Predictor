@@ -9,4 +9,4 @@ keras==2.5.0rc0
 bs4
 tensorflow==2.5.0
 statsmodels==0.12.2
-skleanr==0.24.2
+sklearn==0.24.2
