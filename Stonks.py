@@ -27,10 +27,10 @@ import csv
 from requests.exceptions import ConnectionError
 
 
-words=pickle.load(open('C:/Users/Maanas/Desktop/Codes/Trading-main/words.pkl','rb'))
-classes=pickle.load(open('C:/Users/Maanas/Desktop/Codes/Trading-main/classes.pkl','rb'))
-model = load_model("C:/Users/Maanas/Desktop/Codes/Trading-main/stock_model.h5")
-intents=json.loads(open('C:/Users/Maanas/Desktop/Codes/Trading-main/training.json').read())
+words=pickle.load(open('words.pkl','rb'))
+classes=pickle.load(open('classes.pkl','rb'))
+model = load_model("stock_model.h5")
+intents=json.loads(open('training.json').read())
 def calcMovingAverage(data, size):
     df = data.copy()
     df['sma'] = df['Adj Close'].rolling(size).mean()
@@ -245,7 +245,7 @@ def FinalPrediction(msg):
     res = getResponse(ints, intents)
     return res
 
-stockdata = pd.read_csv("C:/Users/Maanas/Desktop/Codes/Trading-main/SP500.csv")
+stockdata = pd.read_csv("SP500.csv")
 symbols = stockdata['Symbol'].sort_values().tolist()  
 
 st.title('Investment Optimizer and Stock Growth Predictor')
@@ -269,7 +269,7 @@ if(a=="Invest"):
         invest=[]
         invstock_sym=[]
         invstock_name=[]
-        f= open("C:/Users/Maanas/Desktop/Codes/Trading-main/SP500.csv",'r')
+        f= open("SP500.csv",'r')
         rd=csv.reader(f)
         for x in rd:
             if x!=[]:
