@@ -15,22 +15,17 @@ import yfinance as yf
 import streamlit as st
 import statsmodels.api as sm
 import datetime as dt
-import time
 import plotly.graph_objects as go
 from statsmodels.tsa.arima_model import ARIMA
 from sklearn.metrics import mean_squared_error
 import requests
 import json
 import numpy as np
-import matplotlib.pyplot as plt
 from keras.models import load_model
 from bs4 import BeautifulSoup
 import csv
-import pmdarima as pm
 from requests.exceptions import ConnectionError
-from multiprocessing import Process
-from threading import Thread, Event
-from requests.exceptions import ReadTimeout, Timeout
+
 
 words=pickle.load(open('C:/Users/Maanas/Desktop/Codes/Trading-main/words.pkl','rb'))
 classes=pickle.load(open('C:/Users/Maanas/Desktop/Codes/Trading-main/classes.pkl','rb'))
