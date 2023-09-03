@@ -280,7 +280,7 @@ if(a=="Invest"):
         for ticker in invstock_sym:
             ticker_yahoo = yf.Ticker(ticker)
             data = ticker_yahoo.history()
-            last_quote = (data.tail(1)['Close'].iloc[0])
+            last_quote = (data.tail(1)['Close'].iget(0))
             invstock_price.append(float(last_quote))    
         invstock_conf=[]
         st.markdown("""
@@ -628,7 +628,7 @@ if a=='Understand':
 
 
 
-    new = pd.date_range(test_set_range.Date.iloc[-1], periods=30)
+    new = pd.date_range(test_set_range.Date.iget(0), periods=30)
     df1 = pd.DataFrame(new[1:], columns=['Date'])
     df_fin = test_set_range.append(df1, ignore_index=True)
 
