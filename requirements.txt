@@ -8,5 +8,5 @@ numpy==1.19.2
 keras==2.5.0rc0
 bs4
 tensorflow==2.5.0
-statsmodels==0.12.2
+statsmodels==0.13.2
 sklearn
