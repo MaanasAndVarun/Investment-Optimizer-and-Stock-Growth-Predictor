@@ -1,10 +1,10 @@
 nltk==3.5
-pandas==1.1.5
+pandas
 yfinance==0.1.63
 streamlit==1.24.0
 plotly==4.14.3
 requests==2.24.0
-numpy==1.8.2
+numpy
 keras==2.5.0rc0
 bs4
 tensorflow==2.12.0
