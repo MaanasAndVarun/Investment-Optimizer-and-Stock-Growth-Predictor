@@ -9,5 +9,5 @@ keras
 bs4
 tensorflow
 statsmodels
-sklearn
+scikit-learn
 scipy
