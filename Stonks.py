@@ -636,7 +636,7 @@ if a=='Understand':
     mps=[]
     for i in range(30):
         model = ARIMA(history, order=(4,1,0))  
-        fitted = model.fit(disp=0)
+        fitted = model.fit()
         ou=fitted.forecast()
         yha = ou[0]
         mps.append(yha[0])
