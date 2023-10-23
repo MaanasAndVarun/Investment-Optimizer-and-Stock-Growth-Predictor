@@ -612,7 +612,7 @@ if a=='Understand':
         model_fit = model.fit()
         output = model_fit.forecast()
         yhat = output[0]
-        print(yhat)
+        st.write(yhat)
         model_predictions.append(yhat[0])
         true_test_value = test_data[time_point]
         history.append(true_test_value)
