@@ -630,7 +630,7 @@ if a=='Understand':
 
     new = pd.date_range(test_set_range.Date.iloc[0], periods=30)
     df1 = pd.DataFrame(new[1:], columns=['Date'])
-    df_fin = test_set_range.append(df1, ignore_index=True)
+    df_fin = test_set_range.concat(df1, ignore_index=True)
 
     
     mps=[]
