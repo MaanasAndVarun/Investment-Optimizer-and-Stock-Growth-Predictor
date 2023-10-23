@@ -609,7 +609,7 @@ if a=='Understand':
     abcd=0
     for time_point in range(N_test_observations):
         model = ARIMA(history, order=(4,1,0))
-        model_fit = model.fit(disp=0)
+        model_fit = model.fit()
         output = model_fit.forecast()
         yhat = output[0]
         model_predictions.append(yhat[0])
