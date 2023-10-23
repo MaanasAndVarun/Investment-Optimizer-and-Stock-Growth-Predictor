@@ -64,7 +64,7 @@ def graphMyStock(finalvar,a,b,col):
     info2=stock2.info
     ln2=info2['longName']
             
-    opt1b, opt2b = st.beta_columns(2)
+    opt1b, opt2b = st.columns(2)
     with opt1b:
         numYearMAb = st.number_input('Insert period (Year): ', min_value=1, max_value=10, value=2, key=a)    
             
@@ -106,7 +106,7 @@ def graphAllStocks(stocka,stockb,stockc,a,b,col1,col2,col3):
     st.subheader('**Graph of optimal stocks:** ')
 
             
-    opt1b, opt2b = st.beta_columns(2)
+    opt1b, opt2b = st.columns(2)
     with opt1b:
         numYearMAb = st.number_input('Insert period (Year): ', min_value=1, max_value=10, value=2, key=a)    
             
@@ -538,7 +538,7 @@ if a=='Understand':
     st.title(info['longName'])
     st.title(ticker)
             
-    opt1, opt2 = st.beta_columns(2)
+    opt1, opt2 = st.columns(2)
             
     with opt1:
         numYearMA = st.number_input('Insert period (Year): ', min_value=1, max_value=10, value=2, key=0)    
@@ -695,7 +695,7 @@ if a=='Understand':
 
           
     st.subheader('Bollinger Band')
-    opta, optb = st.beta_columns(2)
+    opta, optb = st.columns(2)
     with opta:
         numYearBoll = st.number_input('Insert period (Year): ', min_value=1, max_value=10, value=2, key=6) 
                 
