@@ -16,7 +16,7 @@ import streamlit as st
 import statsmodels.api as sm
 import datetime as dt
 import plotly.graph_objects as go
-from statsmodels.tsa.arima_model import ARIMA
+from statsmodels.tsa.arima.model import ARIMA
 from sklearn.metrics import mean_squared_error
 import requests
 import json
