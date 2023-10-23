@@ -639,8 +639,8 @@ if a=='Understand':
         fitted = model.fit()
         ou=fitted.forecast()
         yha = ou[0]
-        mps.append(yha[0])
-        history.append(yha[0])
+        mps.append(yha)
+        history.append(yha)
     future_dates=[]
 
     dat=[]
